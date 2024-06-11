@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<!-- <view class="content"> -->
 		
 		<view class="mix-list-cell" :class="border" @click="eventClick" hover-class="cell-hover"  :hover-stay-time="50">
 			<text
@@ -17,7 +17,7 @@
 			></text>
 		</view>
 
-	</view>
+	<!-- </view> -->
 </template>
  
 <script>
@@ -85,7 +85,6 @@
 		padding: 20upx $page-row-spacing;
 		line-height:60upx;
 		position:relative;
-		
 		&.cell-hover{
 			background:#fafafa;
 		}

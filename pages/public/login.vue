@@ -4,7 +4,7 @@
 		<view class="back-btn yticon icon-zuojiantou-up" @click="navBack"></view>
 		<view class="right-top-sign"></view>
 		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
-		<view class="wrapper">
+		<!-- <view class="wrapper">
 			<view class="left-top-sign">LOGIN</view>
 			<view class="welcome">
 				欢迎回来！
@@ -25,10 +25,17 @@
 			<view class="forget-section" @click="toRegist">
 				忘记密码?
 			</view>
-		</view>
-		<view class="register-section">
+		</view> -->
+		<!-- <view class="register-section">
 			还没有账号?
 			<text @click="toRegist">马上注册</text>
+		</view> -->
+
+		<view class="login">
+			<button class="button phone" open-type="getPhoneNumber" @getphonenumber="onGetphonenumber">
+				<text class="icon icon-phone"></text>
+				手机号快捷登录
+			</button>
 		</view>
 	</view>
 </template>
@@ -38,19 +45,22 @@
 		mapMutations
 	} from 'vuex';
 	import {
-		memberLogin,memberInfo
+		memberLogin,
+		memberInfo
 	} from '@/api/member.js';
 	export default {
 		data() {
 			return {
 				username: '',
 				password: '',
-				logining: false
+				logining: false,
+				code: ""
 			}
 		},
 		onLoad() {
 			this.username = uni.getStorageSync('username') || '';
 			this.password = uni.getStorageSync('password') || '';
+			this.getCode()
 		},
 		methods: {
 			...mapMutations(['login']),
@@ -58,7 +68,9 @@
 				uni.navigateBack();
 			},
 			toRegist() {
-				uni.navigateTo({url:'/pages/public/register'});
+				uni.navigateTo({
+					url: '/pages/public/register'
+				});
 			},
 			async toLogin() {
 				this.logining = true;
@@ -66,11 +78,11 @@
 					username: this.username,
 					password: this.password
 				}).then(response => {
-					let token = response.data.tokenHead+response.data.token;
-					uni.setStorageSync('token',token);
-					uni.setStorageSync('username',this.username);
-					uni.setStorageSync('password',this.password);
-					memberInfo().then(response=>{
+					let token = response.data.tokenHead + response.data.token;
+					uni.setStorageSync('token', token);
+					uni.setStorageSync('username', this.username);
+					uni.setStorageSync('password', this.password);
+					memberInfo().then(response => {
 						this.login(response.data);
 						uni.navigateBack();
 					});
@@ -78,6 +90,22 @@
 					this.logining = false;
 				});
 			},
+			getCode() {
+				uni.login({
+					provider: 'weixin', //使用微信登录
+					onlyAuthorize: true,
+					success: function(loginRes) {
+						console.log('loginRes', loginRes);
+						this.code = loginRes.code
+					}
+				})
+			},
+			onGetphonenumber(ev) {
+				console.log(this.code, ev);
+				const encryptedData = ev.detail.encryptedData
+				const iv = ev.detail.iv
+				const code = ev.detail.code
+			}
 		},
 
 	}
@@ -217,7 +245,7 @@
 			border-radius: 100px;
 		}
 	}
-	
+
 	.confirm-btn2 {
 		width: 630upx;
 		height: 76upx;
@@ -227,7 +255,7 @@
 		background: $uni-color-primary;
 		color: #fff;
 		font-size: $font-lg;
-	
+
 		&:after {
 			border-radius: 100px;
 		}

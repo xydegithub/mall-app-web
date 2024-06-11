@@ -9,7 +9,7 @@
 			<view class="s-list">
 				<view @click="navToList(item.id)" class="s-item" v-for="item in slist" :key="item.id">
 					<image :src="item.icon||'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20190519/default.png'"></image>
-					<text>{{item.name}}</text>
+					<text class="s-item-text">{{item.name}}</text>
 				</view>
 			</view>
 		</scroll-view>
@@ -83,7 +83,7 @@
 		justify-content: center;
 		width: 100%;
 		height: 100upx;
-		font-size: 28upx;
+		font-size: $font-base;
 		color: $font-color-base;
 		position: relative;
 
@@ -141,6 +141,10 @@
 		image {
 			width: 140upx;
 			height: 140upx;
+		}
+		
+		.s-item-text{
+			font-size: $font-sm;
 		}
 	}
 </style>

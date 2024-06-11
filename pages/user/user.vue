@@ -1,6 +1,6 @@
-<template>  
-    <view class="container">  
-		
+<template>
+	<view class="container">
+
 		<view class="user-section">
 			<image class="bg" src="/static/user-bg.jpg"></image>
 			<view class="user-info-box">
@@ -11,7 +11,7 @@
 					<text class="username">{{userInfo.nickname || '游客'}}</text>
 				</view>
 			</view>
-			<view class="vip-card-box">
+			<!-- <view class="vip-card-box">
 				<image class="card-bg" src="/static/vip-card-bg.png" mode=""></image>
 				<view class="b-btn">
 					立即开通
@@ -22,21 +22,15 @@
 				</view>
 				<text class="e-m">mall移动端商城</text>
 				<text class="e-b">黄金及以上会员可享有会员价优惠商品。</text>
-			</view>
+			</view> -->
 		</view>
-		
-		<view 
-			class="cover-container"
-			:style="[{
+
+		<view class="cover-container" :style="[{
 				transform: coverTransform,
 				transition: coverTransition
-			}]"
-			@touchstart="coverTouchstart"
-			@touchmove="coverTouchmove"
-			@touchend="coverTouchend"
-		>
+			}]" @touchstart="coverTouchstart" @touchmove="coverTouchmove" @touchend="coverTouchend">
 			<image class="arc" src="/static/arc.png"></image>
-			
+
 			<view class="tj-sction">
 				<view class="tj-item">
 					<text class="num">{{userInfo.integration || '暂无'}}</text>
@@ -53,69 +47,134 @@
 			</view>
 			<!-- 订单 -->
 			<view class="order-section">
-				<view class="order-item" @click="navTo('/pages/order/order?state=0')" hover-class="common-hover"  :hover-stay-time="50">
+				<view class="order-item" @click="navTo('/pages/order/order?state=0')" hover-class="common-hover"
+					:hover-stay-time="50">
 					<text class="yticon icon-shouye"></text>
 					<text>全部订单</text>
 				</view>
-				<view class="order-item" @click="navTo('/pages/order/order?state=1')"  hover-class="common-hover" :hover-stay-time="50">
+				<view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover"
+					:hover-stay-time="50">
 					<text class="yticon icon-daifukuan"></text>
 					<text>待付款</text>
 				</view>
-				<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover"  :hover-stay-time="50">
+				<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover"
+					:hover-stay-time="50">
 					<text class="yticon icon-yishouhuo"></text>
 					<text>待收货</text>
 				</view>
-				<view class="order-item" hover-class="common-hover"  :hover-stay-time="50">
+				<view class="order-item" hover-class="common-hover" :hover-stay-time="50">
 					<text class="yticon icon-shouhoutuikuan"></text>
-					<text>退款/售后</text>
+					<text><!-- 退款/ -->售后</text>
 				</view>
 			</view>
 			<!-- 浏览历史 -->
-			<view class="history-section icon">
-				<list-cell icon="icon-dizhi" iconColor="#5fcda2" title="地址管理" @eventClick="navTo('/pages/address/address')"></list-cell>
-				<list-cell icon="icon-lishijilu" iconColor="#e07472" title="我的足迹" @eventClick="navTo('/pages/user/readHistory')"></list-cell>
-				<list-cell icon="icon-shoucang" iconColor="#5fcda2" title="我的关注" @eventClick="navTo('/pages/user/brandAttention')"></list-cell>
-				<list-cell icon="icon-shoucang_xuanzhongzhuangtai" iconColor="#54b4ef" title="我的收藏" @eventClick="navTo('/pages/user/productCollection')"></list-cell>
+			<!-- <view class="history-section icon">
+				<list-cell icon="icon-dizhi" iconColor="#5fcda2" title="地址管理"
+					@eventClick="navTo('/pages/address/address')"></list-cell>
+				<list-cell icon="icon-lishijilu" iconColor="#e07472" title="我的足迹"
+					@eventClick="navTo('/pages/user/readHistory')"></list-cell>
+				<list-cell icon="icon-shoucang" iconColor="#5fcda2" title="我的关注"
+					@eventClick="navTo('/pages/user/brandAttention')"></list-cell>
+				<list-cell icon="icon-shoucang_xuanzhongzhuangtai" iconColor="#54b4ef" title="我的收藏"
+					@eventClick="navTo('/pages/user/productCollection')"></list-cell>
 				<list-cell icon="icon-pingjia" iconColor="#ee883b" title="我的评价"></list-cell>
-				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>
-			</view>
+				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border=""
+					@eventClick="navTo('/pages/set/set')"></list-cell>
+			</view> -->
+			<uni-section class="my-service-container" title="我的服务">
+				<uni-grid :column="3" :show-border="false" :square="false">
+					<uni-grid-item v-for="(item ,index) in serviceList" :index="index" :key="index"
+						@click.native="()=>navTo(item.path)">
+						<view class="grid-item-box">
+							<uni-icons :type="item.iconContent" size="45" color="#e07472"></uni-icons>
+							<text class="text">{{item.title}}</text>
+						</view>
+					</uni-grid-item>
+				</uni-grid>
+			</uni-section>
+
+
 		</view>
-			
-		
-    </view>  
-</template>  
-<script>  
+
+
+	</view>
+</template>
+<script>
 	import listCell from '@/components/mix-list-cell';
 	import {
 		fetchMemberCouponList
 	} from '@/api/coupon.js';
-    import {  
-        mapState 
-    } from 'vuex';  
-	let startY = 0, moveY = 0, pageAtTop = true;
-    export default {
+	import {
+		mapState
+	} from 'vuex';
+	let startY = 0,
+		moveY = 0,
+		pageAtTop = true;
+	export default {
 		components: {
 			listCell
 		},
-		data(){
+		data() {
 			return {
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
-				couponCount:null
+				couponCount: null,
+				serviceList: [{
+						icon: "icon-dizhi",
+						iconColor: "#5fcda2",
+						iconContent: "location-filled",
+						title: "地址管理",
+						path: "/pages/address/address"
+					},
+					{
+						icon: "icon-lishijilu",
+						iconColor: "#e07472",
+						iconContent: "map-filled",
+						title: "我的足迹",
+						path: "/pages/user/readHistory"
+					},
+					{
+						icon: "icon-shoucang",
+						iconColor: "#5fcda2",
+						iconContent: "heart-filled",
+						title: "我的关注",
+						path: "/pages/user/brandAttention"
+					},
+					{
+						icon: "icon-shoucang_xuanzhongzhuangtai",
+						iconColor: "#54b4ef",
+						iconContent: "star-filled",
+						title: "我的收藏",
+						path: "/pages/user/productCollection"
+					},
+					{
+						icon: "icon-pingjia",
+						iconColor: "#ee883b",
+						iconContent: "chatbubble-filled",
+						title: "我的评价",
+						path: ""
+					},
+					{
+						icon: "icon-shezhi1",
+						iconColor: "#e07472",
+						iconContent: "gear-filled",
+						title: "设置",
+						path: "/pages/set/set"
+					},
+				]
 			}
 		},
-		onLoad(){
-		},
-		onShow(){
-			if(this.hasLogin){
-				fetchMemberCouponList(0).then(response=>{
-					if(response.data!=null&&response.data.length>0){
+		onLoad() {},
+		onShow() {
+			if (this.hasLogin) {
+				fetchMemberCouponList(0).then(response => {
+					if (response.data != null && response.data.length > 0) {
 						this.couponCount = response.data.length;
 					}
 				});
-			}else{
-				this.couponCount=null;
+			} else {
+				this.couponCount = null;
 			}
 		},
 		// #ifndef MP
@@ -123,7 +182,7 @@
 			const index = e.index;
 			if (index === 0) {
 				this.navTo('/pages/set/set');
-			}else if(index === 1){
+			} else if (index === 1) {
 				// #ifdef APP-PLUS
 				const pages = getCurrentPages();
 				const page = pages[pages.length - 1];
@@ -138,24 +197,24 @@
 			}
 		},
 		// #endif
-        computed: {
-			...mapState(['hasLogin','userInfo'])
+		computed: {
+			...mapState(['hasLogin', 'userInfo'])
 		},
-        methods: {
+		methods: {
 
 			/**
 			 * 统一跳转接口,拦截未登录路由
 			 * navigator标签现在默认没有转场动画，所以用view
 			 */
-			navTo(url){
-				if(!this.hasLogin){
+			navTo(url) {
+				if (!this.hasLogin) {
 					url = '/pages/public/login';
 				}
-				uni.navigateTo({  
+				uni.navigateTo({
 					url
-				})  
-			}, 
-	
+				})
+			},
+
 			/**
 			 *  会员卡下拉和回弹
 			 *  1.关闭bounce避免ios端下拉冲突
@@ -163,61 +222,85 @@
 			 *    transition设置0.1秒延迟，让css来过渡这段空窗期
 			 *  3.回弹效果可修改曲线值来调整效果，推荐一个好用的bezier生成工具 http://cubic-bezier.com/
 			 */
-			coverTouchstart(e){
-				if(pageAtTop === false){
+			coverTouchstart(e) {
+				if (pageAtTop === false) {
 					return;
 				}
 				this.coverTransition = 'transform .1s linear';
 				startY = e.touches[0].clientY;
 			},
-			coverTouchmove(e){
+			coverTouchmove(e) {
 				moveY = e.touches[0].clientY;
 				let moveDistance = moveY - startY;
-				if(moveDistance < 0){
+				if (moveDistance < 0) {
 					this.moving = false;
 					return;
 				}
 				this.moving = true;
-				if(moveDistance >= 80 && moveDistance < 100){
+				if (moveDistance >= 80 && moveDistance < 100) {
 					moveDistance = 80;
 				}
-		
-				if(moveDistance > 0 && moveDistance <= 80){
+
+				if (moveDistance > 0 && moveDistance <= 80) {
 					this.coverTransform = `translateY(${moveDistance}px)`;
 				}
 			},
-			coverTouchend(){
-				if(this.moving === false){
+			coverTouchend() {
+				if (this.moving === false) {
 					return;
 				}
 				this.moving = false;
 				this.coverTransition = 'transform 0.3s cubic-bezier(.21,1.93,.53,.64)';
 				this.coverTransform = 'translateY(0px)';
 			}
-        }  
-    }  
-</script>  
-<style lang='scss'>
-	%flex-center {
-	 display:flex;
-	 flex-direction: column;
-	 justify-content: center;
-	 align-items: center;
+		}
 	}
-	%section {
-	  display:flex;
-	  justify-content: space-around;
-	  align-content: center;
-	  background: #fff;
-	  border-radius: 10upx;
+</script>
+<style lang='scss'>
+	.my-service-container {
+		.distraction {
+			font-size: $font-base !important;
+		}
+
+		.grid-item-box {
+			flex: 1;
+			// position: relative;
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 30rpx 0;
+
+			.text {
+				font-size: $font-lg;
+			}
+		}
 	}
 
-	.user-section{
+	%flex-center {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	%section {
+		display: flex;
+		justify-content: space-around;
+		align-content: center;
+		background: #fff;
+		border-radius: 10upx;
+	}
+
+	.user-section {
 		height: 520upx;
 		padding: 100upx 30upx 0;
-		position:relative;
-		.bg{
-			position:absolute;
+		position: relative;
+
+		.bg {
+			position: absolute;
 			left: 0;
 			top: 0;
 			width: 100%;
@@ -226,43 +309,48 @@
 			opacity: .7;
 		}
 	}
-	.user-info-box{
+
+	.user-info-box {
 		height: 180upx;
-		display:flex;
-		align-items:center;
-		position:relative;
+		display: flex;
+		align-items: center;
+		position: relative;
 		z-index: 1;
-		.portrait{
+
+		.portrait {
 			width: 130upx;
 			height: 130upx;
-			border:5upx solid #fff;
+			border: 5upx solid #fff;
 			border-radius: 50%;
 		}
-		.username{
+
+		.username {
 			font-size: $font-lg + 6upx;
 			color: $font-color-dark;
 			margin-left: 20upx;
 		}
 	}
 
-	.vip-card-box{
-		display:flex;
+	.vip-card-box {
+		display: flex;
 		flex-direction: column;
 		color: #f7d680;
 		height: 240upx;
-		background: linear-gradient(left, rgba(0,0,0,.7), rgba(0,0,0,.8));
+		background: linear-gradient(left, rgba(0, 0, 0, .7), rgba(0, 0, 0, .8));
 		border-radius: 16upx 16upx 0 0;
 		overflow: hidden;
 		position: relative;
 		padding: 20upx 24upx;
-		.card-bg{
-			position:absolute;
+
+		.card-bg {
+			position: absolute;
 			top: 20upx;
 			right: 0;
 			width: 380upx;
 			height: 260upx;
 		}
-		.b-btn{
+
+		.b-btn {
 			position: absolute;
 			right: 20upx;
 			top: 16upx;
@@ -276,56 +364,67 @@
 			background: linear-gradient(left, #f9e6af, #ffd465);
 			z-index: 1;
 		}
-		.tit{
+
+		.tit {
 			font-size: $font-base+2upx;
 			color: #f7d680;
 			margin-bottom: 28upx;
-			.yticon{
+
+			.yticon {
 				color: #f6e5a3;
 				margin-right: 16upx;
 			}
 		}
-		.e-b{
+
+		.e-b {
 			font-size: $font-sm;
 			color: #d8cba9;
 			margin-top: 10upx;
 		}
 	}
-	.cover-container{
+
+	.cover-container {
 		background: $page-color-base;
 		margin-top: -150upx;
 		padding: 0 30upx;
-		position:relative;
+		position: relative;
 		background: #f5f5f5;
 		padding-bottom: 20upx;
-		.arc{
-			position:absolute;
+
+		.arc {
+			position: absolute;
 			left: 0;
 			top: -34upx;
 			width: 100%;
 			height: 36upx;
 		}
 	}
-	.tj-sction{
+
+	.tj-sction {
 		@extend %section;
-		.tj-item{
+
+		.tj-item {
 			@extend %flex-center;
 			flex-direction: column;
 			height: 140upx;
 			font-size: $font-sm;
 			color: #75787d;
 		}
-		.num{
+
+		.num {
 			font-size: $font-lg;
 			color: $font-color-dark;
 			margin-bottom: 8upx;
 		}
 	}
-	.order-section{
+
+	.order-section {
 		@extend %section;
 		padding: 28upx 0;
 		margin-top: 20upx;
-		.order-item{
+		margin-bottom: 20rpx;
+
+		.order-item {
 			@extend %flex-center;
 			width: 120upx;
 			height: 120upx;
@@ -333,39 +432,46 @@
 			font-size: $font-sm;
 			color: $font-color-dark;
 		}
-		.yticon{
-			font-size: 48upx;
+
+		.yticon {
+			font-size: 60upx;
 			margin-bottom: 18upx;
 			color: #fa436a;
 		}
-		.icon-shouhoutuikuan{
-			font-size:44upx;
+
+		.icon-shouhoutuikuan {
+			font-size: 60upx;
 		}
 	}
-	.history-section{
+
+	.history-section {
 		padding: 30upx 0 0;
 		margin-top: 20upx;
 		background: #fff;
-		border-radius:10upx;
-		.sec-header{
-			display:flex;
+		border-radius: 10upx;
+
+		.sec-header {
+			display: flex;
 			align-items: center;
 			font-size: $font-base;
 			color: $font-color-dark;
 			line-height: 40upx;
 			margin-left: 30upx;
-			.yticon{
+
+			.yticon {
 				font-size: 44upx;
 				color: #5eba8f;
 				margin-right: 16upx;
 				line-height: 40upx;
 			}
 		}
-		.h-list{
+
+		.h-list {
 			white-space: nowrap;
 			padding: 30upx 30upx 0;
-			image{
-				display:inline-block;
+
+			image {
+				display: inline-block;
 				width: 160upx;
 				height: 160upx;
 				margin-right: 20upx;
@@ -373,5 +479,4 @@
 			}
 		}
 	}
-	
 </style>

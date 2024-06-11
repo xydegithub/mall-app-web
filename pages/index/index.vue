@@ -2,9 +2,9 @@
 	<view class="container">
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
-		<view class="mp-search-box">
+<!-- 		<view class="mp-search-box">
 			<input class="ser-input" type="text" value="输入关键字搜索" disabled />
-		</view>
+		</view> -->
 		<!-- #endif -->
 
 		<!-- 头部轮播 -->
@@ -46,7 +46,7 @@
 		</view>
 
 		<!-- 品牌制造商直供 -->
-		<view class="f-header m-t" @click="navToRecommendBrandPage()">
+		<!-- <view class="f-header m-t" @click="navToRecommendBrandPage()">
 			<image src="/static/icon_home_brand.png"></image>
 			<view class="tit-box">
 				<text class="tit">品牌制造商直供</text>
@@ -63,10 +63,10 @@
 				<text class="title clamp">{{item.name}}</text>
 				<text class="title2">商品数量：{{item.productCount}}</text>
 			</view>
-		</view>
+		</view> -->
 
 		<!-- 秒杀专区 -->
-		<view class="f-header m-t" v-if="homeFlashPromotion!==null">
+		<!-- <view class="f-header m-t" v-if="homeFlashPromotion!==null">
 			<image src="/static/icon_flash_promotion.png"></image>
 			<view class="tit-box">
 				<text class="tit">秒杀专区</text>
@@ -94,10 +94,10 @@
 				<text class="title2 clamp">{{item.subTitle}}</text>
 				<text class="price">￥{{item.price}}</text>
 			</view>
-		</view>
+		</view> -->
 
 		<!-- 新鲜好物 -->
-		<view class="f-header m-t" @click="navToNewProudctListPage()">
+		<!-- <view class="f-header m-t" @click="navToNewProudctListPage()">
 			<image src="/static/icon_new_product.png"></image>
 			<view class="tit-box">
 				<text class="tit">新鲜好物</text>
@@ -116,10 +116,10 @@
 					</view>
 				</view>
 			</scroll-view>
-		</view>
+		</view> -->
 
 		<!-- 人气推荐楼层 -->
-		<view class="f-header m-t" @click="navToHotProudctListPage()">
+		<!-- <view class="f-header m-t" @click="navToHotProudctListPage()">
 			<image src="/static/icon_hot_product.png"></image>
 			<view class="tit-box">
 				<text class="tit">人气推荐</text>
@@ -139,7 +139,7 @@
 					<text class="price">￥{{item.price}}</text>
 				</view>
 			</view>
-		</view>
+		</view> -->
 
 		<!-- 猜你喜欢-->
 		<view class="f-header m-t">

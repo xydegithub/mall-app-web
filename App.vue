@@ -5,13 +5,15 @@
 	import {
 		mapMutations
 	} from 'vuex';
+	import permission from './utils/permission';
 	export default {
 		methods: {
 			...mapMutations(['login'])
 		},
 		onLaunch: function() {
 			let userInfo = uni.getStorageSync('userInfo') || '';
-			if(userInfo.id){
+			//存在缓存则认为是登录态，依靠接口进行过期校验
+			if (userInfo.id) {
 				//更新登陆状态
 				uni.getStorage({
 					key: 'userInfo',
@@ -20,7 +22,9 @@
 					}
 				});
 			}
-			
+			//对路由进行统一拦截
+			// permission()
+
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -364,6 +368,7 @@
 	video {
 		box-sizing: border-box;
 	}
+
 	/* 骨架屏替代方案 */
 	.Skeleton {
 		background: #f3f3f3;

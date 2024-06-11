@@ -1026,9 +1026,12 @@
 		}
 	}
 
-	.detail-desc>>>img {
+	.detail-desc {
+		/deep/ img{
+			
 		width: 100%;
 		height: auto;
+		}
 	}
 
 	/* 规格选择弹窗 */
