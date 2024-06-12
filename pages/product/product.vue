@@ -21,13 +21,13 @@
 			</view>
 			<view class="bot-row">
 				<text>销量: {{product.sale}}</text>
-				<text>库存: {{product.stock}}</text>
-				<text>浏览量: 768</text>
+				<!-- <text>库存: {{product.stock}}</text>
+				<text>浏览量: 768</text> -->
 			</view>
 		</view>
 
 		<!--  分享 -->
-		<view class="share-section" @click="share">
+		<!-- <view class="share-section" @click="share">
 			<view class="share-icon">
 				<text class="yticon icon-xingxing"></text>
 				返
@@ -39,7 +39,7 @@
 				<text class="yticon icon-you"></text>
 			</view>
 
-		</view>
+		</view> -->
 
 		<view class="c-list">
 			<view class="c-row b-b" @click="toggleSpec">
@@ -58,7 +58,7 @@
 				</view>
 				<text class="yticon icon-you"></text>
 			</view>
-			<view class="c-row b-b" @click="toggleCoupon('show')">
+<!-- 			<view class="c-row b-b" @click="toggleCoupon('show')">
 				<text class="tit">优惠券</text>
 				<text class="con t-r red">领取优惠券</text>
 				<text class="yticon icon-you"></text>
@@ -74,11 +74,11 @@
 				<view class="bz-list con">
 					<text v-for="item in serviceList" :key="item">{{item}} ·</text>
 				</view>
-			</view>
+			</view> -->
 		</view>
 
 		<!-- 评价 -->
-		<view class="eva-section">
+		<!-- <view class="eva-section">
 			<view class="e-header">
 				<text class="tit">评价</text>
 				<text>(86)</text>
@@ -86,7 +86,8 @@
 				<text class="yticon icon-you"></text>
 			</view>
 			<view class="eva-box">
-				<image class="portrait" src="http://img3.imgtn.bdimg.com/it/u=1150341365,1327279810&fm=26&gp=0.jpg" mode="aspectFill"></image>
+				<image class="portrait" src="http://img3.imgtn.bdimg.com/it/u=1150341365,1327279810&fm=26&gp=0.jpg"
+					mode="aspectFill"></image>
 				<view class="right">
 					<text class="name">Leo yo</text>
 					<text class="con">商品收到了，79元两件，质量不错，试了一下有点瘦，但是加个外罩很漂亮，我很喜欢</text>
@@ -96,10 +97,10 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 
 		<!-- 品牌信息 -->
-		<view class="brand-info">
+		<!-- <view class="brand-info">
 			<view class="d-header">
 				<text>品牌信息</text>
 			</view>
@@ -112,13 +113,13 @@
 					<text>品牌首字母：{{brand.firstLetter}}</text>
 				</view>
 			</view>
-		</view>
+		</view> -->
 
 		<view class="detail-desc">
 			<view class="d-header">
 				<text>图文详情</text>
 			</view>
-			<rich-text :nodes="desc"></rich-text>
+			<rich-text :nodes="showDesc"></rich-text>
 		</view>
 
 		<!-- 底部操作菜单 -->
@@ -164,8 +165,9 @@
 				<view v-for="(item,index) in specList" :key="index" class="attr-list">
 					<text>{{item.name}}</text>
 					<view class="item-list">
-						<text v-for="(childItem, childIndex) in specChildList" v-if="childItem.pid === item.id" :key="childIndex" class="tit"
-						 :class="{selected: childItem.selected}" @click="selectSpec(childIndex, childItem.pid)">
+						<text v-for="(childItem, childIndex) in specChildList" v-if="childItem.pid === item.id"
+							:key="childIndex" class="tit" :class="{selected: childItem.selected}"
+							@click="selectSpec(childIndex, childItem.pid)">
 							{{childItem.name}}
 						</text>
 					</view>
@@ -303,7 +305,10 @@
 			this.loadData(id);
 		},
 		computed: {
-			...mapState(['hasLogin'])
+			...mapState(['hasLogin']),
+			showDesc() {
+				return this.formatRichText(this.desc)
+			}
 		},
 		filters: {
 			formatDateTime(time) {
@@ -325,6 +330,29 @@
 			},
 		},
 		methods: {
+			formatRichText(html) {
+				// html 就是你要传进来地富文本参数
+				// 去掉img标签里的style、width、height属性
+				let newContent = html.replace(/<img[^>]*>/gi, function(match, capture) {
+					match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+					match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+					match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+					return match;
+				});
+				// 修改所有style里的width属性为max-width:100%
+				newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
+					match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi,
+						'max-width:100%;');
+					return match;
+				});
+				// 去掉<br/>标签
+				newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+				// img标签添加style属性：max-width:100%;height:auto
+				newContent = newContent.replace(/\<img/gi,
+					'<img style="max-width:100%;height:auto;display:block;margin:0px auto;"');
+				// 返回 处理后地结果
+				return newContent;
+			},
 			async loadData(id) {
 				fetchProductDetail(id).then(response => {
 					this.product = response.data.product;
@@ -366,10 +394,10 @@
 			toggleCoupon(type) {
 				fetchProductCouponList(this.product.id).then(response => {
 					this.couponList = response.data;
-					if(this.couponList==null||this.couponList.length==0){
+					if (this.couponList == null || this.couponList.length == 0) {
 						uni.showToast({
-							title:"暂无可领优惠券",
-							icon:"none"
+							title: "暂无可领优惠券",
+							icon: "none"
 						})
 						return;
 					}
@@ -578,15 +606,15 @@
 			//初始化商品详情信息
 			initProductDesc() {
 				let rawhtml = this.product.detailMobileHtml;
-				let tempNode = document.createElement('div');
-				tempNode.innerHTML = rawhtml;
-				let imgs = tempNode.getElementsByTagName('img');
-				for (let i = 0; i < imgs.length; i++) {
-					imgs[i].style.width = '100%';
-					imgs[i].style.height = 'auto';
-					imgs[i].style.display = 'block';
-				}
-				this.desc = tempNode.innerHTML;
+				// let tempNode = document.createElement('div');
+				// tempNode.innerHTML = rawhtml;
+				// let imgs = tempNode.getElementsByTagName('img');
+				// for (let i = 0; i < imgs.length; i++) {
+				// 	imgs[i].style.width = '100%';
+				// 	imgs[i].style.height = 'auto';
+				// 	imgs[i].style.display = 'block';
+				// }
+				this.desc = rawhtml;
 			},
 			//处理创建浏览记录
 			handleReadHistory() {
@@ -697,7 +725,7 @@
 				}
 			},
 			//跳转到品牌详情页
-			navToBrandDetail(){
+			navToBrandDetail() {
 				let id = this.brand.id;
 				uni.navigateTo({
 					url: `/pages/brand/brandDetail?id=${id}`
@@ -1027,10 +1055,10 @@
 	}
 
 	.detail-desc {
-		/deep/ img{
-			
-		width: 100%;
-		height: auto;
+		/deep/ img {
+			display: block;
+			width: 100%;
+			height: auto;
 		}
 	}
 
@@ -1472,14 +1500,14 @@
 			font-size: $font-base + 2upx;
 			color: $font-color-dark;
 			position: relative;
-		
+
 			text {
 				padding: 0 20upx;
 				background: #fff;
 				position: relative;
 				z-index: 1;
 			}
-		
+
 			&:after {
 				position: absolute;
 				left: 50%;

@@ -92,10 +92,10 @@
 						state: 0,
 						text: '待付款'
 					},
-					{
-						state: 2,
-						text: '待收货'
-					},
+					// {
+					// 	state: 2,
+					// 	text: '待收货'
+					// },
 					{
 						state: 3,
 						text: '已完成'

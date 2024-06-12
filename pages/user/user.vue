@@ -31,7 +31,7 @@
 			}]" @touchstart="coverTouchstart" @touchmove="coverTouchmove" @touchend="coverTouchend">
 			<image class="arc" src="/static/arc.png"></image>
 
-			<view class="tj-sction">
+			<!-- <view class="tj-sction">
 				<view class="tj-item">
 					<text class="num">{{userInfo.integration || '暂无'}}</text>
 					<text>积分</text>
@@ -44,7 +44,7 @@
 					<text class="num">{{couponCount || '暂无'}}</text>
 					<text>优惠券</text>
 				</view>
-			</view>
+			</view> -->
 			<!-- 订单 -->
 			<view class="order-section">
 				<view class="order-item" @click="navTo('/pages/order/order?state=0')" hover-class="common-hover"
@@ -57,14 +57,22 @@
 					<text class="yticon icon-daifukuan"></text>
 					<text>待付款</text>
 				</view>
-				<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover"
+				<!-- <view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover"
 					:hover-stay-time="50">
 					<text class="yticon icon-yishouhuo"></text>
 					<text>待收货</text>
 				</view>
 				<view class="order-item" hover-class="common-hover" :hover-stay-time="50">
 					<text class="yticon icon-shouhoutuikuan"></text>
-					<text><!-- 退款/ -->售后</text>
+					<text>退款/售后</text>
+				</view> -->
+				<view class="order-item" @click="navTo('/pages/user/readHistory')" hover-class="common-hover" :hover-stay-time="50">
+					<uni-icons type="map-filled" size="45" color="#e07472"></uni-icons>
+					<text>我的足迹</text>
+				</view>
+				<view class="order-item" @click="navTo('/pages/user/productCollection')" hover-class="common-hover" :hover-stay-time="50">
+					<uni-icons type="star-filled" size="45" color="#e07472"></uni-icons>
+					<text>我的收藏</text>
 				</view>
 			</view>
 			<!-- 浏览历史 -->
@@ -81,7 +89,7 @@
 				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border=""
 					@eventClick="navTo('/pages/set/set')"></list-cell>
 			</view> -->
-			<uni-section class="my-service-container" title="我的服务">
+			<!-- <uni-section class="my-service-container" title="我的服务">
 				<uni-grid :column="3" :show-border="false" :square="false">
 					<uni-grid-item v-for="(item ,index) in serviceList" :index="index" :key="index"
 						@click.native="()=>navTo(item.path)">
@@ -91,7 +99,7 @@
 						</view>
 					</uni-grid-item>
 				</uni-grid>
-			</uni-section>
+			</uni-section> -->
 
 
 		</view>
@@ -420,14 +428,16 @@
 
 	.order-section {
 		@extend %section;
+		flex-wrap: wrap;
 		padding: 28upx 0;
 		margin-top: 20upx;
 		margin-bottom: 20rpx;
 
 		.order-item {
 			@extend %flex-center;
-			width: 120upx;
+			width: 240upx;
 			height: 120upx;
+			margin-bottom: 20rpx;
 			border-radius: 10upx;
 			font-size: $font-sm;
 			color: $font-color-dark;

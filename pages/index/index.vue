@@ -12,7 +12,7 @@
 			<!-- 标题栏和状态栏占位符 -->
 			<view class="titleNview-placing"></view>
 			<!-- 背景色区域 -->
-			<view class="titleNview-background" :style="{backgroundColor:titleNViewBackground}"></view>
+			<!-- <view class="titleNview-background" :style="{backgroundColor:titleNViewBackground}"></view> -->
 			<swiper class="carousel" circular @change="swiperChange">
 				<swiper-item v-for="(item, index) in advertiseList" :key="index" class="carousel-item" @click="navToAdvertisePage(item)">
 					<image :src="item.pic" />
@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<!-- 头部功能区 -->
-		<view class="cate-section">
+		<!-- <view class="cate-section">
 			<view class="cate-item">
 				<image src="/static/temp/c3.png"></image>
 				<text>专题</text>
@@ -43,7 +43,7 @@
 				<image src="/static/temp/c7.png"></image>
 				<text>特惠</text>
 			</view>
-		</view>
+		</view> -->
 
 		<!-- 品牌制造商直供 -->
 		<!-- <view class="f-header m-t" @click="navToRecommendBrandPage()">
@@ -145,7 +145,7 @@
 		<view class="f-header m-t">
 			<image src="/static/icon_recommend_product.png"></image>
 			<view class="tit-box">
-				<text class="tit">猜你喜欢</text>
+				<text class="tit">精品课程</text>
 				<text class="tit2">你喜欢的都在这里了</text>
 			</view>
 			<text class="yticon icon-you" v-show="false"></text>
