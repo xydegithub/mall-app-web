@@ -32,8 +32,9 @@
 		</view> -->
 
 		<view class="login">
+			<view class="title"><text>99课程</text></view>
 			<button class="button phone" open-type="getPhoneNumber" @getphonenumber="onGetphonenumber">
-				<text class="icon icon-phone"></text>
+				<uni-icons type="phone-filled" size="24"></uni-icons>
 				手机号快捷登录
 			</button>
 		</view>
@@ -72,11 +73,11 @@
 					url: '/pages/public/register'
 				});
 			},
-			async toLogin() {
+			async toLogin(data) {
 				this.logining = true;
 				memberLogin({
-					username: this.username,
-					password: this.password
+					username: data.username || this.username,
+					password: data.password || this.password
 				}).then(response => {
 					let token = response.data.tokenHead + response.data.token;
 					uni.setStorageSync('token', token);
@@ -105,6 +106,11 @@
 				const encryptedData = ev.detail.encryptedData
 				const iv = ev.detail.iv
 				const code = ev.detail.code
+				//todo 获取手机号后调登录接口
+				this.toLogin({
+					username: "member",
+					password: "member123"
+				})
 			}
 		},
 
@@ -280,6 +286,24 @@
 		text {
 			color: $font-color-spec;
 			margin-left: 10upx;
+		}
+	}
+
+	.login {
+		.title {
+			width: 400rpx;
+			height: 400rpx;
+			margin: 0 auto 20rpx auto;
+			font-size: 120rpx;
+			line-height: 400rpx;
+			text-align: center;
+			background: #fa436a;
+			color: #fff;
+		}
+
+		.phone {
+			width: 480rpx;
+			border-radius: 20rpx;
 		}
 	}
 </style>

@@ -41,7 +41,7 @@
 
 		</view> -->
 
-		<view class="c-list">
+		<!-- <view class="c-list">
 			<view class="c-row b-b" @click="toggleSpec">
 				<text class="tit">购买类型</text>
 				<view class="con">
@@ -58,7 +58,7 @@
 				</view>
 				<text class="yticon icon-you"></text>
 			</view>
-<!-- 			<view class="c-row b-b" @click="toggleCoupon('show')">
+			<view class="c-row b-b" @click="toggleCoupon('show')">
 				<text class="tit">优惠券</text>
 				<text class="con t-r red">领取优惠券</text>
 				<text class="yticon icon-you"></text>
@@ -74,8 +74,8 @@
 				<view class="bz-list con">
 					<text v-for="item in serviceList" :key="item">{{item}} ·</text>
 				</view>
-			</view> -->
-		</view>
+			</view>
+		</view> -->
 
 		<!-- 评价 -->
 		<!-- <view class="eva-section">
@@ -130,7 +130,7 @@
 			</navigator>
 			<navigator url="/pages/cart/cart" open-type="switchTab" class="p-b-btn">
 				<text class="yticon icon-gouwuche"></text>
-				<text>购物车</text>
+				<text>选购车</text>
 			</navigator>
 			<view class="p-b-btn" :class="{active: favorite}" @click="toFavorite">
 				<text class="yticon icon-shoucang"></text>
@@ -139,7 +139,7 @@
 
 			<view class="action-btn-group">
 				<button type="primary" class=" action-btn no-border buy-now-btn" @click="buy">立即购买</button>
-				<button type="primary" class=" action-btn no-border add-cart-btn" @click="addToCart">加入购物车</button>
+				<button type="primary" class=" action-btn no-border add-cart-btn" @click="addToCart">加入选购车</button>
 			</view>
 		</view>
 

@@ -2,8 +2,8 @@
 	<!-- <view class="status-bar" :style="{ height: systemInfo.statusBarHeight + 'px' }"></view> -->
 	<view class="content">
 		<view class="my-player-wrap">
-			<video :title="playingInfo.title" :src="playingInfo.src" @error="videoErrorCallback" play-strategy='2'
-				autoplay='true' vslide-gesture-in-fullscreen=true controls=true
+			<video :title="playingInfo.title" :src="playingInfo.src||testUrl" @error="videoErrorCallback"
+				play-strategy='2' autoplay='true' vslide-gesture-in-fullscreen=true controls=true
 				:style="{ width: systemInfo.screenWidth + 'px' }">
 			</video>
 		</view>
@@ -40,12 +40,14 @@
 				poster: '',
 				playList: [],
 				playingInfo: {},
+				testUrl: "http://47.111.177.56:888/mall-res/mall/20240611/1695820165450.mp4 "
 			}
 		},
 		created() {
 			this.systemInfo = uni.getSystemInfoSync();
 		},
 		onLoad(option) {
+			return
 			const eventChannel = this.getOpenerEventChannel();
 			eventChannel.on('acceptDataFromOpenerPage', (res) => {
 				this.title = res.data.title;

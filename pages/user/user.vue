@@ -52,11 +52,16 @@
 					<text class="yticon icon-shouye"></text>
 					<text>全部订单</text>
 				</view>
-				<view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover"
+				<view class="order-item" @click="navTo('/pages/product/myList?fid=3&sid=35')" hover-class="common-hover"
+					:hover-stay-time="50">
+					<text class="yticon icon-daifukuan"></text>
+					<text>我的课程</text>
+				</view>
+				<!-- <view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover"
 					:hover-stay-time="50">
 					<text class="yticon icon-daifukuan"></text>
 					<text>待付款</text>
-				</view>
+				</view> -->
 				<!-- <view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover"
 					:hover-stay-time="50">
 					<text class="yticon icon-yishouhuo"></text>
@@ -66,11 +71,13 @@
 					<text class="yticon icon-shouhoutuikuan"></text>
 					<text>退款/售后</text>
 				</view> -->
-				<view class="order-item" @click="navTo('/pages/user/readHistory')" hover-class="common-hover" :hover-stay-time="50">
+				<view class="order-item" @click="navTo('/pages/user/readHistory')" hover-class="common-hover"
+					:hover-stay-time="50">
 					<uni-icons type="map-filled" size="45" color="#e07472"></uni-icons>
 					<text>我的足迹</text>
 				</view>
-				<view class="order-item" @click="navTo('/pages/user/productCollection')" hover-class="common-hover" :hover-stay-time="50">
+				<view class="order-item" @click="navTo('/pages/user/productCollection')" hover-class="common-hover"
+					:hover-stay-time="50">
 					<uni-icons type="star-filled" size="45" color="#e07472"></uni-icons>
 					<text>我的收藏</text>
 				</view>
